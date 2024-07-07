@@ -1,0 +1,90 @@
+<odoo>
+     <record id="todo_task_report" model="ir.actions.report">
+            <field name="name">To Do Report</field>
+            <field name="model">todo.task</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="binding_model_id" ref="model_todo_task"/>
+            <field name="binding_type">report</field>
+            <field name="report_name">todo_management.todo_task_report_template</field>
+        </record>
+
+    <template id="todo_task_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="rec">
+                <h1>To Do Report</h1>
+                <style>
+                    table {
+                    width:100%;
+                    border:1px solid #b3adad;
+                    border-collapse:collapse;
+                    padding:5px;
+                    }
+                    table th {
+                    border:1px solid #b3adad;
+                    text-align:center;
+                    padding:5px;
+                    background: #f0f0f0;
+                    color: #313030;
+                    }
+                    table td {
+                    border:1px solid #b3adad;
+                    text-align:center;
+                    padding:5px;
+                    background: #ffffff;
+                    color: #313030;
+                    }
+                </style>
+                <div class="page">
+<!--                            <h1 style="margin-left:200px;">To Do Report</h1>-->
+                            <br/>
+                            <span class="text-center">Task  :   </span><span t-field="rec.task_name"></span>
+                            <br/>
+                            <span class="text-center">Due Date  :   </span><span t-field="rec.due_date"></span>
+                            <br/>
+                            <span class="text-center">Assign To  :   </span><span t-field="rec.assign_to_id"></span>
+                            <br/>
+                            <span class="text-center">Estimated Time :  </span><span t-field="rec.estimated_time"></span>
+                            <br/>
+                            <br/>
+                            <span class="text-center">Description :   </span><span t-field="rec.description"></span>
+
+                            <br/>
+                            <br/>
+
+                </div>
+
+                <br/>
+                <table>
+                    <thead>
+                        <th colspan="4">Timesheet</th>
+                    </thead>
+                    <thead>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Time</th>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="rec.line_ids" t-as="line">
+                            <tr>
+                                <td>
+                                    <span t-field="line.date"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.description"/>
+                                </td>
+                                <td>
+                                    <t t-esc="line.time"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+            </t>
+        </t>
+
+    </template>
+
+
+</odoo>
